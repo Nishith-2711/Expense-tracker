@@ -3,6 +3,7 @@
 __pycache__/
 *.pyc
 *.pdf
+*.csv
 .idea/
 *.csv~
 *.py~
