@@ -17,4 +17,3 @@ def insert_transactions(csv_path):
 
     conn.commit()
     conn.close()
-    print("CSV data inserted.")

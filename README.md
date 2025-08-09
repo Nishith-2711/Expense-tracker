@@ -16,7 +16,7 @@ A CLI-based smart expense tracking tool with bank statement parsing
 ## Tech Stack
 
 - Python 3
-- SQLite
+- MySQL
 - `argparse`, `pandas`, `rich` (for display)
 
 ---
