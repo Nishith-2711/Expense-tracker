@@ -6,7 +6,6 @@ import os
 def extract_transactions(pdf_path):
     transactions = []
 
-    # Define multiple regex patterns
     patterns = [
         {
             "name": "discover",
@@ -32,7 +31,6 @@ def extract_transactions(pdf_path):
                     match = pattern["regex"].match(line)
                     if match:
                         data = match.groups()
-                        # Assign fields depending on group names
                         date = data[0]
                         merchant = data[1]
                         if "category" in pattern["groups"]:
@@ -44,14 +42,19 @@ def extract_transactions(pdf_path):
 
                         amount = amount.replace(",", "")
                         transactions.append([date, merchant, category, amount])
-                        break  # Stop checking once matched
+                        break
 
     return pd.DataFrame(transactions, columns=["DATE", "MERCHANT", "CATEGORY", "AMOUNT"])
 
-if __name__ == "__main__":
-    pdf_file = "data/Statement.pdf"  # Change this to your file
-    df = extract_transactions(pdf_file)
+def pdf_to_csv():
 
-    base_name = os.path.splitext(os.path.basename(pdf_file))[0]
-    csv_file = f"{base_name}.csv"
-    df.to_csv(csv_file, index=False)
+    pdf_folder = r"C:\Codes\Projects\spend_analyzer\data"
+    for file in os.listdir(pdf_folder):
+        if file.lower().endswith(".pdf"):
+            pdf_file = os.path.join(pdf_folder, file)
+
+            df = extract_transactions(pdf_file)
+
+            base_name = os.path.splitext(file)[0]
+            csv_file = os.path.join(pdf_folder, f"{base_name}.csv")
+            df.to_csv(csv_file, index=False)
